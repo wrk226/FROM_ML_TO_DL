@@ -13,10 +13,31 @@
   
   **(a)概率分布函数（累积概率函数）**   
   用于描述某一段连续值的概率分布，通常用```F(x)```表示,指数值小于等于x的所有概率之和，因此必然是单调递增的（因为概率不能小于0）    
-  **(b)概率函数（离散值），概率密度函数（连续值）**   
+  **(b)概率(质量)函数（离散值），概率密度函数（连续值）**   
   用于描述每个数值的概率，通常用```f(x)```表示，是F(x)的导数。因此f(x)曲线下[a,b]之间的面积就是数值在[a,b]之间的概率值。  
   ![742658-6902c1e6b17050f6](https://user-images.githubusercontent.com/7517810/107124240-a04da100-6870-11eb-987b-23ff0e9167cb.jpg)  
   </details>  
+* [伯努利分布/两点分布/0-1分布](https://zh.wikipedia.org/wiki/%E4%BC%AF%E5%8A%AA%E5%88%A9%E5%88%86%E5%B8%83)
+  <details>  
+  <summary>笔记</summary>  
+  
+  进行一次伯努利实验，成功则值为1，不成功则为0.坐标轴x轴为试验次数，y轴为当试验次数为x时的成功率。  
+  </details> 
+* [二项分布](https://zh.wikipedia.org/wiki/%E4%BA%8C%E9%A0%85%E5%BC%8F%E5%88%86%E5%B8%83)
+  <details>  
+  <summary>笔记</summary>  
+  
+  进行n伯努利实验，如果其中k次都成功了则概率函数如下图所示，如果n=1则等价于伯努利分布  
+  ![微信截图_20210206174303](https://user-images.githubusercontent.com/7517810/107131262-c8ee8e80-68a2-11eb-923b-5dad0670d022.png)  
+  </details> 
+* [正态分布/高斯分布](https://zh.wikipedia.org/wiki/%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83)  
+  <details>  
+  <summary>笔记</summary>  
+    
+  ![微信截图_20210206175110](https://user-images.githubusercontent.com/7517810/107131408-ea9c4580-68a3-11eb-8c1e-8622cf0e3bd4.png)
+  中心极限定理：大量统计独立的随机变量的平均值的分布趋近于正态分布。
+  当二项分布中n无穷大，p=0.5时，可以近似于正态分布。  
+  </details> 
 * [自信息，熵，以及最大似然](https://blog.csdn.net/yujianmin1990/article/details/71213601)
   <details>  
   <summary>笔记</summary>  
