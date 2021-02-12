@@ -56,10 +56,15 @@
   自信息的期望值。均匀分布时熵最大。  
   ![微信截图_20210206151842](https://user-images.githubusercontent.com/7517810/107128797-9f2b6c80-688e-11eb-9fb5-b6077f519f09.png)  
   联合熵，H(X,Y)：联合分布的混乱程度。　  
+  ![微信截图_20210211224424](https://user-images.githubusercontent.com/7517810/107728025-e1074900-6cba-11eb-8899-07e1781c52b7.png)  
   互信息，I(X,Y)：两个变量相互间相互依赖程度。  
+  ![微信截图_20210211224433](https://user-images.githubusercontent.com/7517810/107728026-e1074900-6cba-11eb-8a8f-bb11947894e3.png)  
   [条件熵](https://zhuanlan.zhihu.com/p/26551798)，H(X|Y)：联合分布基于某变量的条件下的熵  
-  交叉熵，CE(X,Y)：两个分布的不相似程度的描述，越相似，交叉熵越低，越不相似，交叉熵越高。  
+  ![微信截图_20210211224439](https://user-images.githubusercontent.com/7517810/107728027-e1074900-6cba-11eb-8e11-1674e88032f9.png)  
+  交叉熵，CE(X,Y)：两个分布的不相似程度的描述，越相似，交叉熵越低，越不相似，交叉熵越高。 
+  ![微信截图_20210211224142](https://user-images.githubusercontent.com/7517810/107727844-532b5e00-6cba-11eb-8b28-6da838495781.png)  
   相对熵，DKL(X,Y)：两个分布的不对称程度的距离，也叫KL divergence。  
+  ![微信截图_20210211224449](https://user-images.githubusercontent.com/7517810/107728028-e19fdf80-6cba-11eb-97c6-ba8d25b65545.png)    
   关系：交叉熵=信息熵+相对熵，CE(X,Y)=H(X)+DKL(X,Y)  
   </details>  
 * 指数分布族(The Exponential Family)和广义线性模型(Generalized Linear Model)[[概述]](https://zhuanlan.zhihu.com/p/22876460)[[证明]](https://xg1990.com/blog/archives/304)
@@ -145,6 +150,40 @@
       <summary>笔记</summary>  
   
       ![20180902220822202](https://user-images.githubusercontent.com/7517810/107108946-0f43df00-680a-11eb-82c2-7396cfc8d2c7.jpg)
+      </details>
+  * 网络模块      
+    * [RNN]()  
+      <details>  
+      <summary>笔记</summary>  
+      
+      简而言之就是将序列分成一个个时间点，然后按照时间顺序挨个进入网络。  
+      每一个时间点网络接受的输入=前一个时间点的隐藏层输出+这个一时间点的数据输入，加上一个线性函数，然后经过一个激活函数(tanh或relu)。  
+      每一个时间点的输出=这一个时间点的隐藏层输入，加上一个线型函数，然后经过最后的激活函数(softmax或sigmoid)。  
+      需要注意的是，所有时间点是共用同一组隐层权重和输出权重的，不同时间点也就只是在这组权重上不断迭代而已。  
+      正向传播  
+      ![微信截图_20210211222558](https://user-images.githubusercontent.com/7517810/107726901-2413ed00-6cb8-11eb-9b91-b1488085f666.png)  
+      反向传播  
+      得到每个时间点输出的loss function，然后求和，将之一步步倒推回去。        
+      </details>
+    * [LSTM]()  
+      <details>  
+      <summary>笔记</summary>  
+  
+      </details>
+    * [GRU]()  
+      <details>  
+      <summary>笔记</summary>  
+  
+      </details>
+    * [Transformer]()  
+      <details>  
+      <summary>笔记</summary>  
+  
+      </details>
+    * [Bert]()  
+      <details>  
+      <summary>笔记</summary>  
+  
       </details>
       
       
