@@ -165,15 +165,29 @@
       反向传播  
       得到每个时间点输出的loss function，然后求和，将之一步步倒推回去。        
       </details>
+    * [GRU-gate recurrent unit](https://www.bilibili.com/video/BV1gb411j7Bs?p=152&spm_id_from=pageDriver)  
+      <details>  
+      <summary>笔记</summary>  
+  
+      GRU实质上是为了处理梯度消失(gradient vanishing)的问题的，GRU中有两个门:更新门(update gate)和重置门(reset gat)。    
+      什么是门呢？可以想象门就是一个二极管，电流足够他就亮，电流不够他就黑着。    
+      对应到网络中，电流就是 前一时间节点的隐层状态 和 这一时间节点的输入。然后在外面的激活函数sigmoid就是开关，用来将输入二值化(要么是1，要么是0)。    
+      因此两个门就是两个不同的线性方程+sigmoid激活函数的输出，结果就是1或者0。而且所有的门都是这种形式，没有本质的区别。（就像厕所门，卧室门，没有本质的区别，只是一个指示符而已）    
+      重置门就是用于决定前一时间节点的隐层状态要不要保留的一个系数。  
+      剩下的和RNN就很相似了，新的隐藏状态就等于经过重置门的前一时间节点的隐藏状态+这一时间节点的输入，然后外面套一个tanh。  
+      最后再用更新门决定到底是要用用新的隐藏状态作为结果还是用前一时间节点的隐藏状态作为输出。  
+      ![微信截图_20210214210126](https://user-images.githubusercontent.com/7517810/107897758-f8874180-6f07-11eb-901c-3462b7247805.png)
+      </details>
     * [LSTM]()  
       <details>  
       <summary>笔记</summary>  
-  
-      </details>
-    * [GRU]()  
-      <details>  
-      <summary>笔记</summary>  
-  
+      
+      lstm和gru表面上的区别是多了一个输出，gru是只有隐藏状态(hidden state)，而lstm多了个单元状态(cell state)，单元状态只是用于记忆信息的，不参与输出。  
+      lstm和GRU的区别在于lstm取消了GRU中的重置门，然后增加了一个遗忘门和输出门。  
+      lstm流程就是迁移时间点的隐藏状态+这一时间点的输入后加sigmoid变成各种门，或者加tanh变成暂时的单元状态。  
+      前一时刻的单元状态*遗忘门+暂时的单元状态*更新门=新的单元状态
+      隐藏状态/输出状态=新的单元状态*输出门
+      ![微信截图_20210214210227](https://user-images.githubusercontent.com/7517810/107897780-0341d680-6f08-11eb-85a7-3732731d1de8.png)
       </details>
     * [Transformer]()  
       <details>  
