@@ -182,11 +182,11 @@
       <details>  
       <summary>笔记</summary>  
       
-      lstm和gru表面上的区别是多了一个输出，gru是只有隐藏状态(hidden state)，而lstm多了个单元状态(cell state)，单元状态只是用于记忆信息的，不参与输出。  
-      lstm和GRU的区别在于lstm取消了GRU中的重置门，然后增加了一个遗忘门和输出门。  
-      lstm流程就是迁移时间点的隐藏状态+这一时间点的输入后加sigmoid变成各种门，或者加tanh变成暂时的单元状态。  
-      前一时刻的单元状态*遗忘门+暂时的单元状态*更新门=新的单元状态
-      隐藏状态/输出状态=新的单元状态*输出门
+      lstm和gru表面上的区别是多了一个输出，gru是只有隐藏状态(hidden state)，而lstm多了个单元状态(cell state)，单元状态只是用于记忆信息的，不参与输出。    
+      lstm和GRU的区别在于lstm取消了GRU中的重置门，然后增加了一个遗忘门和输出门。    
+      lstm流程就是迁移时间点的隐藏状态+这一时间点的输入后加sigmoid变成各种门，或者加tanh变成暂时的单元状态。    
+      前一时刻的单元状态*遗忘门+暂时的单元状态*更新门=新的单元状态  
+      隐藏状态/输出状态=新的单元状态*输出门  
       ![微信截图_20210214210227](https://user-images.githubusercontent.com/7517810/107897780-0341d680-6f08-11eb-85a7-3732731d1de8.png)
       </details>
     * [Transformer]()  
