@@ -241,7 +241,7 @@
   
     使用上下文的词预测中间词
     </details>
-  * [GloVe-global vectors for word representation](https://www.fanyeong.com/2018/02/19/glove-in-detail/)
+* [GloVe-global vectors for word representation](https://www.fanyeong.com/2018/02/19/glove-in-detail/)
     <details>  
     <summary>笔记</summary> 
     
