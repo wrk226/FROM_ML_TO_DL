@@ -96,6 +96,13 @@
   简单来说就是把条件函数乘以一个新变量lambda，然后代入原函数里后再求导找极值就完事了。
   ![微信截图_20210209200535](https://user-images.githubusercontent.com/7517810/107449786-3522f980-6b12-11eb-8614-647a1ababf93.png)
   </details> 
+* [Cosine similarity](https://zhuanlan.zhihu.com/p/78504132)
+  <details>  
+  <summary>笔记</summary>   
+  
+  可以用于测量两个词嵌入的相似度。向量相乘除以两个向量长度之积，也就是说两个向量完全一致的时候值为1，不一致的时候小于1
+  ![微信截图_20210215160220](https://user-images.githubusercontent.com/7517810/107992687-36877280-6fa7-11eb-8e58-eafc88d08fc2.png)  
+  </details>
 # 机器学习  
 ## 监督学习  
 * [最大熵模型](https://zhuanlan.zhihu.com/p/78504132)
@@ -152,7 +159,7 @@
       ![20180902220822202](https://user-images.githubusercontent.com/7517810/107108946-0f43df00-680a-11eb-82c2-7396cfc8d2c7.jpg)
       </details>
   * 网络模块      
-    * [RNN]()  
+    * [RNN](https://www.bilibili.com/video/BV1gb411j7Bs?p=146)  
       <details>  
       <summary>笔记</summary>  
       
@@ -164,6 +171,14 @@
       ![微信截图_20210211222558](https://user-images.githubusercontent.com/7517810/107726901-2413ed00-6cb8-11eb-9b91-b1488085f666.png)  
       反向传播  
       得到每个时间点输出的loss function，然后求和，将之一步步倒推回去。        
+      </details>
+    * [Bidirectional RNN](https://www.bilibili.com/video/BV1gb411j7Bs?p=154)
+      <details>  
+      <summary>笔记</summary>  
+      
+      单向RNN只能获得时间点之前的信息，因此有了双向RNN模型，为了就是能获取双向的信息。  
+      分为两部分，正向的和普通RNN一样，从0到t。  
+      反向的就是反过来，从t到0。然后在输出的时候结合正向和反向的两个输出一起进行预测。  
       </details>
     * [GRU-gate recurrent unit](https://www.bilibili.com/video/BV1gb411j7Bs?p=152&spm_id_from=pageDriver)  
       <details>  
@@ -178,7 +193,7 @@
       最后再用更新门决定到底是要用用新的隐藏状态作为结果还是用前一时间节点的隐藏状态作为输出。  
       ![微信截图_20210214210126](https://user-images.githubusercontent.com/7517810/107897758-f8874180-6f07-11eb-901c-3462b7247805.png)
       </details>
-    * [LSTM]()  
+    * [LSTM unit-long short term memory unit](https://www.bilibili.com/video/BV1gb411j7Bs?p=153)  
       <details>  
       <summary>笔记</summary>  
       
@@ -189,6 +204,7 @@
       隐藏状态/输出状态=新的单元状态*输出门  
       ![微信截图_20210214210227](https://user-images.githubusercontent.com/7517810/107897780-0341d680-6f08-11eb-85a7-3732731d1de8.png)
       </details>
+    
     * [Transformer]()  
       <details>  
       <summary>笔记</summary>  
@@ -200,4 +216,39 @@
   
       </details>
       
-      
+# NLP
+## 词嵌入(word embedding)
+* word2vec
+  * [skip gram](https://www.bilibili.com/video/BV1gb411j7Bs?p=161)
+    <details>  
+    <summary>笔记</summary>  
+    
+    选定中间词（context），预测周围词(target)。并借此优化中间词的embedding。之所以叫skip gram是因为每次都是随机选择预测中词的左边第几个，或者右边第几个，中间可以间隔几个词。  
+    基本流程就是：先找到中间词的embedding，然后经过一个线性操作，放入softmax，并用交叉熵作为loss function，最终通过梯度下降来优化embedding。  
+    **优化：**  
+    使用softmax有一个问题就是我们softmax公式里的除数是词库里所有embedding的和，算这个和很费时间。因此有了hierachical softmax，通过类似二分搜索的形式来确定embedding的所在位置。  
+    **随机选择：**  
+    也就是说怎么选择预测哪个周围词。最简单的方式就是限定个范围，比如前后十个词以内，然后随机挑。但这样就有个问题，有一些连接词比如of, the, and就会出现的非常多，但这些词通常对中间词的理解没有什么太大的帮助。
+    **负采样：**
+    先选定一对context和target，并且标记为1，然后随机从词库里挑k个词作为negative target，也即标记为0。  
+    如果数据库较小k一般选择5-20，如果较大就选择2-5。一般选negative target的的时候是基于词频的3/4次幂的占比来计算取词概率的，这样就不会出现太多连接词，并且也尽量的平均分布。
+    然后用一个logistic regression来分类就行了。
+    放在神经网络中也就是：先找到中间词的embedding,然后经过一个线性操作，之后放入sigmoid分别对这k+1个pair进行二分类预测。从而避免了softmax中对所有词的求和。
+    </details>
+  * [CBOW-continues bag of words](https://easyai.tech/blog/nlp-%E9%A2%86%E5%9F%9F%E9%87%8C%E7%9A%848-%E7%A7%8D%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA%E6%96%B9%E5%BC%8F%E5%8F%8A%E4%BC%98%E7%BC%BA%E7%82%B9/)
+    <details>  
+    <summary>笔记</summary> 
+  
+    使用上下文的词预测中间词
+    </details>
+  * [GloVe-global vectors for word representation](https://www.fanyeong.com/2018/02/19/glove-in-detail/)
+    <details>  
+    <summary>笔记</summary> 
+    
+    对于每一对pair:context word和target word，基于固定窗口统计context word和target word的共现次数，记做X(会随着距离衰减)。theta作为target的embedding，e作为context的embedding，通过gradient descent最小化f(x)sum((theta\*e+bi-bj'-log(x))^2 for 所有pair。) ，这里f(x)是一个权重，一个是为了防止x=0时log(x)变成无穷大(f(0)=0)，还有一个就是给词频太大或词频太小的词一个合理的weight.还有一个有意思的部分是，theta和e是对称的，因此最后的embedding通常是取两者的平均（得到的embedding代表了两个词之间的关系，可以通过求和得到某个特定词的vector表示）  
+    另外，embedding事实上是比较难以解释的，因为每一个系数都可能是多个不同属性的线性叠加，比如0.2\*性别+0.8\*食物
+    ![微信截图_20210215200334](https://user-images.githubusercontent.com/7517810/108006234-e9b49380-6fc8-11eb-8c7d-14d2d1e9c56e.png)
+    </details>
+  
+
+
