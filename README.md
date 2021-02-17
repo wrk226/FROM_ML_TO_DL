@@ -210,20 +210,64 @@
       <details>  
       <summary>笔记</summary>  
   
+      假设我们的任务是翻译句子，从中文翻译成英文。则中文句子中每个词都可以想象成一个<key,value>的pair。key代表词语的地址，value代表词语的向量表示。英文中与中文词语对应的词便称之为query。  
+      整个过程便是：  
+      1. 比较key和query的相似度，得到s  
+      2. 使用softmax归一化，将s转化为权重a(其实就是概率)，这里可以保证所有s之和为1(因为softmax输出的是概率嘛。。。)  
+      3. 使用权重乘以value得到最终预测时的输入值  
+      值得一提的是，有时候key和value可以使用同一个值，也就是都用rnn生成的output。  
+      另外，步骤1中计算相似度可以用的方法有很多，比如：点乘，cosine相似度，mlp网络(一层全连接网络)  
+      ![v2-07c4c02a9bdecb23d9664992f142eaa5_1440w](https://user-images.githubusercontent.com/7517810/108157513-ec8ab380-70b0-11eb-8420-5818c52dd884.png)    
+      **k,q,v是什么**  
+      q，k，v分别是query，key，value。  
+      对于encoder self-attention，第一次计算的初始值是每个字的embedding，q用来和k做点乘计算相似度，这些相似度经过softmax变成权重，然后权重和v相乘，其实就是v的一个加权平均。  
+      如果是encoder-decoder attention，q是decoder的hidden state，k和v是encoder各个位置的hidden state。
       </details>
-    * [Transformer]()  
+    * [自注意力机制self attention](https://www.zhihu.com/question/68482809/answer/264632289)  
       <details>  
       <summary>笔记</summary>  
-  
+      
+      顾名思义，self attention就是自己对自己的注意力机制。也即source和target都是同一组词，其余部分和注意力机制一样。  
+      自注意力的用处主要在于寻找句子内单词的联系，可以找到句法特征或者语义特征。
       </details>
-    * [Bert]()  
+    * [Transformer](https://github.com/NLP-LOVE/ML-NLP/tree/master/NLP/16.7%20Transformer)  
       <details>  
       <summary>笔记</summary>  
-  
+      
+      假设这里我们的任务还是从中文翻译成英文。  
+      positional encoder：在普通的seq2seq模型中我们会使用embedding来给每个输入字符在embedding space中找定位置，从而让相似的词拥有相似的向量。但是同一个词在句子的不同位置也往往有不同的意思，因此这里就引入了postitional coding，基本就是通过公式计算出来字符在sentence中位置的表达向量。然后将positional encoding和embedding相加来构成一个新的包含位置信息的embedding。  
+      然后就是self attention，这个是为了获得当前字符于其他字符的关联性。也即每个中文字符与其他中文字符的关联性。这里会出现的问题是每个word可能和自己的相关性太高，导致attention weight价值低，所以这里就引入了multihead attention，意思是同时对word做多个attention,然后用这些attention做加权平均，来得到最终的attention weight.
+      feed forwared:这个就是个线性模型，目的就是把attention的输出调整成适合下一层的输入。  
+      decoder：  
+      decoder中我们会先输入英语的embedding，然后也加上position information。  
+      然后和encoder中一样，使用self attention，然后将这里的输出和encoder里的输出一起输入下一层。不过这里的self attention是加了mask的。有两种mask,一种是Padding mask，是将pad的字符的权重都设为0。还有一种是sequence mask，是将所有还未出现的word的embedding都调成0，这样的原因是在生成翻译结果的时候模型是看不到当前时间点以后的信息的，因此在训练的时候也需要把以后的信息给mask掉。  
+      encoder-decoder-attention：这里对decoder输入的内容和encoder输出的内容一起做attention，可以得到每个中文字符对应每个英文字符的attention weight。这里就是可以得到中文和英文一一对应的重要性  
+      最后得到的输出经过几个线性层就可以得到输出了，我们得到的输出是对于下一个词的预测，是基于softmax的，就是从多个候选中选出最合适的那个词。不断将预测出的值输入decoder知道生成了最后一个word。  
+      另外，值得一提的是，在每个attention层和feedforward层后都会接一个add&norm层，这层的含义就是将输入和输出值相加（就是残差模块，和resnet里的效果一样，主要就是为了防止梯度爆炸或消失。），然后做一个norm，一般norm是layer norm，当然，我们也可以做batch norm。  
+      layer norm：对于同一个数据做norm保证mean=0, std=1  
+      batch norm: 对于一个batch里各个数据向量值做norm，保证同一个维度mean=0,std=1    
       </details>
+
       
 # NLP
+## 通用方法
+* [language model-语言模型](https://zhuanlan.zhihu.com/p/28080127)
+  <details>  
+  <summary>笔记</summary>  
+  
+  简单地说，语言模型就是用来计算一个句子的概率的模型，也就是判断一句话是否是人话的概率.
+  </details>
+      
 ## 词嵌入(word embedding)
+* [NNLM-neural network language model]神经网络语言模型(https://zhuanlan.zhihu.com/p/80093548)  
+  <details>  
+  <summary>笔记</summary>  
+  
+  NNLM是非常早期的一个模型，这个模型是试图用前t-1个单词来预测第t个单词。  
+  一开始是输入每个单词的one hot vector，然后乘以一个矩阵(实质上就是embedding matrix)得到这个词的向量表示。  
+  然后输入一个全连接层加tanh激活函数，最后再输入对应字典大小的全连接层加softmax预测结果。  
+  ![v2-8fb5317fd5f6be810c9bbdf56f2d33a1_1440w](https://user-images.githubusercontent.com/7517810/108261153-32875c00-7131-11eb-9f60-37db04af73d1.jpg)  
+  </details>
 * word2vec
   * [skip gram](https://www.bilibili.com/video/BV1gb411j7Bs?p=161)
     <details>  
@@ -255,16 +299,35 @@
     另外，embedding事实上是比较难以解释的，因为每一个系数都可能是多个不同属性的线性叠加，比如0.2\*性别+0.8\*食物
     ![微信截图_20210215200334](https://user-images.githubusercontent.com/7517810/108006234-e9b49380-6fc8-11eb-8c7d-14d2d1e9c56e.png)
     </details>
+* [ELMO]  
+  <details>  
+  <summary>笔记</summary> 
+
+  使用bi-lstm抽取文本特征
+  </details>
+* [GPT]  
+  <details>  
+  <summary>笔记</summary> 
+
+  使用单向transformer抽取文本特征
+  </details>
+* [Bert-Bidirectional Encoder Representation from Transformers](https://zhuanlan.zhihu.com/p/46652512)  
+  <details>  
+  <summary>笔记</summary>  
+
+  使用双向transformer抽取文本特征。输入层的embedding和transformer有所不同，是token embedding, segment embedding, position embedding之和。其中segment embedding是用于句子的区分，position embedding不是用三角函数，而是学习出来的。  
+  bert使用两大任务进行预训练：  
+  1.masked lm，就是随机mask15%的词语，然后用上下文预测这个词。mask方法是10%不替换，10%随机替换成别的词，80%替换成占位符。  
+  2.next sentence prediction，就是预测B是不是A的下一个句子。由此获得段落之间的知识。
+  </details>
 ## 机器翻译
   * beam search  
     <details>  
     <summary>笔记</summary>  
     
     在机器翻译过程中greedy search的方式得到的答案并不理想，因为往往局部最优并不代表全局最优，而又不可能所有组合都试一遍，因此就有了beam search.  
-    beam search就是同时保持k个局部最优解，从而使得答案更为理想一些。
-    </details>
-    <summary>优化</summary>  
-    
+    beam search就是同时保持k个局部最优解，从而使得答案更为理想一些。  
+    **优化**      
     **length normalization**  
     就是将每一步的概率值取log。因为beam search在取局部最优时比较的是到目前为止的概率之积，由于概率都是小于1的，这就会导致越长的sentence被取到的概率越小。通过取log，概率相乘就变成了Log相加，从而避免了这个问题。
     </details>
