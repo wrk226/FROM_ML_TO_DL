@@ -249,6 +249,31 @@
     另外，embedding事实上是比较难以解释的，因为每一个系数都可能是多个不同属性的线性叠加，比如0.2\*性别+0.8\*食物
     ![微信截图_20210215200334](https://user-images.githubusercontent.com/7517810/108006234-e9b49380-6fc8-11eb-8c7d-14d2d1e9c56e.png)
     </details>
+## 机器翻译
+  * beam search  
+    <details>  
+    <summary>笔记</summary>  
+    
+    在机器翻译过程中greedy search的方式得到的答案并不理想，因为往往局部最优并不代表全局最优，而又不可能所有组合都试一遍，因此就有了beam search.  
+    beam search就是同时保持k个局部最优解，从而使得答案更为理想一些。
+    </details>
+    <summary>优化</summary>  
+    
+    **length normalization**  
+    就是将每一步的概率值取log。因为beam search在取局部最优时比较的是到目前为止的概率之积，由于概率都是小于1的，这就会导致越长的sentence被取到的概率越小。通过取log，概率相乘就变成了Log相加，从而避免了这个问题。
+    </details>
+  * [Bleu score](https://www.bilibili.com/video/BV1gb411j7Bs?p=171&spm_id_from=pageDriver)
+    <details>  
+    <summary>笔记</summary>  
   
+    用于给翻译出的句子打分。基本思路就是从人类翻译的句子中找相同的词，然后算count之比。 
+    机器翻译的词语一个就是一个count，人类翻译句子里每个词语的max count=机器翻译里的max count。  
+    例如，人类翻译:what the fuck。机器翻译:what the what hell。    
+    则机器翻译的count=2+1+1， 人类翻译的count=1+1+0，p=2/4=1/2。    
+    上面的例子是针对gram=1来算的，在实际中还可以用gram=2,3,4...也就是词组的出现次数。      
+    ![微信截图_20210216222243](https://user-images.githubusercontent.com/7517810/108151783-8187af80-70a5-11eb-9eee-72f3039c1eda.png)  
+    在最后的公式里上面的比例是在e的power上的，然后外面还会加一个惩罚项，是用来防止短句子得分过高  
+    ![微信截图_20210216222220](https://user-images.githubusercontent.com/7517810/108151787-82b8dc80-70a5-11eb-9238-5b3b271accca.png)  
+    </details>
 
 
