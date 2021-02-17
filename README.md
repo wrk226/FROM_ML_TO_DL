@@ -203,8 +203,12 @@
       前一时刻的单元状态*遗忘门+暂时的单元状态*更新门=新的单元状态  
       隐藏状态/输出状态=新的单元状态*输出门  
       ![微信截图_20210214210227](https://user-images.githubusercontent.com/7517810/107897780-0341d680-6f08-11eb-85a7-3732731d1de8.png)
+      </details>    
+    * [注意力机制-Attention mechanism](https://www.zhihu.com/question/68482809/answer/264632289)  
+      <details>  
+      <summary>笔记</summary>  
+  
       </details>
-    
     * [Transformer]()  
       <details>  
       <summary>笔记</summary>  
