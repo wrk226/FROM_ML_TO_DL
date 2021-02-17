@@ -155,7 +155,9 @@
     * [softmax](https://blog.csdn.net/bitcarmanlee/article/details/82320853)  
       <details>  
       <summary>笔记</summary>  
-  
+      
+      softmax本质上也就是个激活函数，所谓激活函数也就是为了给网络引入非线性变化而已。  
+      而softmax的作用有两个，一个是将分数转变为概率，另一个是让分数大的概率不要太大，分数小的概率不要太小。  
       ![20180902220822202](https://user-images.githubusercontent.com/7517810/107108946-0f43df00-680a-11eb-82c2-7396cfc8d2c7.jpg)
       </details>
   * 网络模块      
