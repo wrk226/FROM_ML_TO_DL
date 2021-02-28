@@ -415,7 +415,8 @@
   <details>  
   <summary>笔记</summary>  
 
-  使用双向transformer抽取文本特征。输入层的embedding和transformer有所不同，是token embedding, segment embedding, position embedding之和。其中segment embedding是用于句子的区分，position embedding不是用三角函数，而是学习出来的。  
+  本质上就是把transformer堆叠在一起罢了。然后使用两大任务进行预训练，从而得到更精准的language model。之所以说bert是双向transformer是因为他的random mask可以同时学习到上下文的知识。
+  值得一提的是，bert输入层的embedding和transformer有所不同，是token embedding, segment embedding, position embedding之和。其中segment embedding是用于句子的区分，position embedding不是用三角函数，而是学习出来的。  
   bert使用两大任务进行预训练：  
   1.masked lm，就是随机mask15%的词语，然后用上下文预测这个词。mask方法是10%不替换，10%随机替换成别的词，80%替换成占位符。  
   2.next sentence prediction，就是预测B是不是A的下一个句子。由此获得段落之间的知识。
