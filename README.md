@@ -103,6 +103,11 @@
   可以用于测量两个词嵌入的相似度。向量相乘除以两个向量长度之积，也就是说两个向量完全一致的时候值为1，不一致的时候小于1
   ![微信截图_20210215160220](https://user-images.githubusercontent.com/7517810/107992687-36877280-6fa7-11eb-8e58-eafc88d08fc2.png)  
   </details>
+* [l1 l2 regularization]()
+  <details>  
+  <summary>笔记</summary>   
+  
+  </details>
 # 机器学习  
 ## 监督学习  
 * [EM算法/期望极大算法(Expectation Maximization algorithm)](https://zhuanlan.zhihu.com/p/78311644) 
