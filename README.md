@@ -241,6 +241,8 @@
       **相对熵**：用于衡量信息熵和交叉熵之间的差异。训练过程中总希望相对熵趋近0。  
       </details>    
       [为什么在分类任务中使用交叉熵？](https://zhuanlan.zhihu.com/p/74075915)
+      
+      [KL散度与交叉熵区别与联系](https://blog.csdn.net/Dby_freedom/article/details/83374650)
       <details>  
       <summary>笔记</summary>  
   
